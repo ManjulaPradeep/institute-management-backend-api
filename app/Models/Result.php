@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'marks',
+        'grade'
+    ];
+
+    public function subject(){
+        return $this->belongsTo(Subject::class);
+    }
+    public function student(){
+        return $this->hasMany(Student::class);
+    }
 }

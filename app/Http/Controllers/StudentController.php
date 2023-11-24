@@ -13,7 +13,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        return Student::all();
     }
 
     /**
@@ -63,4 +63,43 @@ class StudentController extends Controller
     {
         //
     }
+
+
+
+
+
+
+        // // Retrieve all students
+        // public function index()
+        // {
+        //     return Student::all();
+        // }
+    
+        // // Retrieve a single student by ID
+        // public function show($id)
+        // {
+        //     return Student::findOrFail($id);
+        // }
+    
+        // // Create a new student
+        // public function store(Request $request)
+        // {
+        //     return Student::create($request->all());
+        // }
+    
+        // // Update a student by ID
+        // public function update(Request $request, $id)
+        // {
+        //     $student = Student::findOrFail($id);
+        //     $student->update($request->all());
+        //     return $student;
+        // }
+    
+        // // Delete a student by ID
+        // public function destroy($id)
+        // {
+        //     $student = Student::findOrFail($id);
+        //     $student->delete();
+        //     return response()->json(['message' => 'Student deleted successfully']);
+        // }
 }

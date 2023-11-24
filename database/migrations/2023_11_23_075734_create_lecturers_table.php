@@ -12,7 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lecturers', function (Blueprint $table) {
-            $table->id();
+            $table->id("lecturer_id");
+            // $table->bigInteger("lecturer_id")->unique();
+            $table->string("name");
+            $table->string("nic")->unique();
+            $table->string("address");
+            $table->string("contact");
+            $table->string("email")->unique();
+            // $table->foreign("course_id")->references("id")->on("courses");
+            // $table->foreign("subject_id")->references("id")->on("subjects");
             $table->timestamps();
         });
     }
