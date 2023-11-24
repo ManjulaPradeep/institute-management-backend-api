@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
+use PhpParser\Node\Stmt\TryCatch;
 
 class StudentController extends Controller
 {
@@ -29,7 +30,17 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        //
+        try {
+            $student = Student::create($request->validated());
+
+            if ($student) {
+                return response()->json(['message' => 'Student created successfully','Data' => $student],200);
+            } else {
+                return response()->json(['message' => 'Failed to create the student','Data' => null],500);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Failed to create the student : '.$th->getMessage(), 'Data' => null],500);
+        }
     }
 
     /**
