@@ -61,9 +61,9 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(StudentRequest  $student,$regNo)
+    public function show(StudentRequest  $student, $studentID)
     {
-        $student = Student::where('reg_no', $regNo)->first();
+        $student = Student::where('student_id', $studentID)->first();
 
         if (!$student) {
             return response()->json(['message' => 'Student not found'], 400);
@@ -85,14 +85,14 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentRequest $request, $regNo)
+    public function update(UpdateStudentRequest $request, $studentID)
     {
-        $student = Student::where('student_id', $regNo)->first();
+        $student = Student::where('student_id', $studentID)->first();
 
         if ($student) {
             try {
                 $student->update($request->validated());
-    
+
                 return response()->json(['message' => 'Student updated successfully'], 200);
             } catch (\Throwable $th) {
                 Log::error('Error at updating student' . $th->getMessage());
@@ -106,53 +106,15 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StudentRequest  $student, $regNo)
+    public function destroy(StudentRequest $request, $studentID)
     {
-        $student = Student::where('reg_no', $regNo)->first();
+        $student = Student::where('student_id', $studentID)->first();
 
         if (!$student) {
             return response()->json(['message' => 'Student not found'], 404);
         }
-
-        return response()->json(['message' => 'Student deleted']);
+        
+        $student->delete();
+        return response()->json(['message' => 'Student deleted'],204);
     }
-
-
-
-
-
-
-    // // Retrieve all students
-    // public function index()
-    // {
-    //     return Student::all();
-    // }
-
-    // // Retrieve a single student by ID
-    // public function show($id)
-    // {
-    //     return Student::findOrFail($id);
-    // }
-
-    // // Create a new student
-    // public function store(Request $request)
-    // {
-    //     return Student::create($request->all());
-    // }
-
-    // // Update a student by ID
-    // public function update(Request $request, $id)
-    // {
-    //     $student = Student::findOrFail($id);
-    //     $student->update($request->all());
-    //     return $student;
-    // }
-
-    // // Delete a student by ID
-    // public function destroy($id)
-    // {
-    //     $student = Student::findOrFail($id);
-    //     $student->delete();
-    //     return response()->json(['message' => 'Student deleted successfully']);
-    // }
 }

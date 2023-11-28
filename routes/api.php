@@ -20,10 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/students',[StudentController::class,'index']);
-Route::get('/students/{regNo}',[StudentController::class,'show']);
+Route::get('/students/{studentID}',[StudentController::class,'show']);
 Route::post('/students', [StudentController::class, 'store']);
-Route::put('/students/{regNo}', [StudentController::class, 'update']);
-
+Route::put('/students/{studentID}', [StudentController::class, 'update']);
+// Route::delete('/students/{studentID}', [StudentController::class, 'destroy']);
+Route::delete('/students/{studentID}', [StudentController::class, 'destroy']);
 
 // // Retrieve all students
 // Route::get('/students', [StudentController::class, 'index']);

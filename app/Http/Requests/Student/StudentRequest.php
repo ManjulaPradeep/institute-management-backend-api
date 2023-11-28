@@ -24,7 +24,16 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'regNo' => 'string|max:10|exists:students,reg_no',
+            'studentID' => 'int|max:8|exists:students,student_id',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'studentID.int' => 'The studentID field must be a integer',
+            'studentID.max' => 'The studentID field can not be more than 8 characters',
+            'studentID.exists' => 'The studentID not found',
         ];
     }
 
