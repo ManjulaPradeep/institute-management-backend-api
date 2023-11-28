@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Student;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateStudentRequest extends FormRequest
 {
@@ -22,11 +24,12 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:512',
-            'nic' => 'required|max:12|unique:students,nic,' . $this->student_id,
-            'address' => 'required|string|max:512',
-            'contact' => 'required|string|max:12',
-            'email' => 'required|email|max:150|unique:students,email,' . $this->student_id,
+            // 'name' => 'required|string|max:512',
+            'name' => 'sometimes|string|max:512',
+            'nic' => 'sometimes|max:12|unique:students,nic,' .$this->route('regNo') . ',student_id',
+            'address' => 'sometimes|string|max:512',
+            'contact' => 'sometimes|string|max:12',
+            'email' => 'sometimes|email|max:150|unique:students,email,'. $this->route('regNo') . ',student_id',
         ];
     }
 
@@ -38,7 +41,7 @@ class UpdateStudentRequest extends FormRequest
             'name.max' => 'The name field can not be more than 512 characters.',
 
             'nic.required' => 'The NIC field is required.',
-            'nic.unique' => 'The NIC must be unique.',
+            'nic.unique' => 'The NIC has already been taken.',
             'nic.max' => 'The NIC field van not be more than 12 charackters.',
 
             'address.required' => 'The address field is required.',
@@ -51,8 +54,19 @@ class UpdateStudentRequest extends FormRequest
 
             'email.required' => 'The email field is required.',
             'email.email' => 'The email must be a valid email format.',
-            'email.unique' => 'The email must be unique.',
+            'email.unique' => 'The email has already been taken.',
             'email.max' => 'The email field can not be more than 150 characters.'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+    
+        throw new HttpResponseException(response()->json([
+            'message' => 'Validation failed',
+            'errors' => $errors,
+            'data' => null, // Include this line to provide additional context
+        ], 422));
     }
 }

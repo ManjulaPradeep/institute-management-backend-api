@@ -7,6 +7,9 @@ use App\Http\Requests\Student\StoreStudentRequest;
 use App\Http\Requests\Student\UpdateStudentRequest;
 use App\Http\Requests\Student\StudentRequest;
 use App\Http\Resources\StudentResource;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\TryCatch;
 
 class StudentController extends Controller
@@ -34,24 +37,41 @@ class StudentController extends Controller
     public function store(StoreStudentRequest $request)
     {
         try {
-            $student = Student::create($request->validated());
+            $student = Student::create([
+                'name' => $request->input('name'),
+                'reg_no' => $request->input('regNo'),
+                'nic' => $request->input('nic'),
+                'address' => $request->input('address'),
+                'contact' => $request->input('contact'),
+                'email' => $request->input('email'),
+            ]);
 
-            if ($student) {
-                return response()->json(['message' => 'Student created successfully', 'Data' => $student], 200);
-            } else {
-                return response()->json(['message' => 'Failed to create the student', 'Data' => null], 500);
-            }
+            return response()->json([
+                'message' => 'Student created successfully',
+            ], 201);
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Failed to create the student : ' . $th->getMessage(), 'Data' => null], 500);
+            Log::error('Failed to create a student: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Failed to create the student',
+            ], 500);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(StudentRequest  $student,$regNo)
     {
-        //
+        $student = Student::where('reg_no', $regNo)->first();
+
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 400);
+        }
+
+        $studentResource = new StudentResource($student);
+
+        return response()->json(['data' => $studentResource], 200);
     }
 
     /**
@@ -67,27 +87,34 @@ class StudentController extends Controller
      */
     public function update(UpdateStudentRequest $request, $regNo)
     {
-        $student = Student::where('reg_no', $regNo)->first();
+        $student = Student::where('student_id', $regNo)->first();
 
         if ($student) {
             try {
                 $student->update($request->validated());
-
-                return response()->json(['message' => 'Student updated successfully', 'Data' => $student], 200);
+    
+                return response()->json(['message' => 'Student updated successfully'], 200);
             } catch (\Throwable $th) {
-                return response()->json(['message' => 'Failed to update the student: ' . $th->getMessage(), 'Data' => null], 500);
+                Log::error('Error at updating student' . $th->getMessage());
+                return response()->json(['message' => 'Failed to update the student: ' . $th->getMessage()], 500);
             }
         } else {
-            return response()->json(['message' => 'Student not found', 'Data' => null], 404);
+            return response()->json(['message' => 'Student not found'], 404);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(StudentRequest  $student, $regNo)
     {
-        //
+        $student = Student::where('reg_no', $regNo)->first();
+
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+
+        return response()->json(['message' => 'Student deleted']);
     }
 
 
