@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Subject;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 
 class StoreSubjectRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreSubjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,16 @@ class StoreSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'sometimes|string|max:254'
+        ];
+    }
+
+    public function messages():array
+    {
+        return [
+            'name.required' => 'The name field is required.',
+            'name.string' => 'The name field must be a string.',
+            'name.max' => 'The name field can not be more than 254 characters.'
         ];
     }
 }

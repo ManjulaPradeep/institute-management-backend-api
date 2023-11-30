@@ -3,6 +3,7 @@
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,3 +39,9 @@ Route::get('/courses/{courseID}',[CourseController::class,'show']);
 Route::post('/courses',[CourseController::class, 'store']);
 Route::put('/courses/{courseID}',[CourseController::class,'update']);
 Route::delete('/courses/{courseID}',[CourseController::class,'destroy']);
+
+Route::get('/subjects',[SubjectController::class,'index']);
+Route::get('/subjects/{subjectID}',[SubjectController::class,'show']);
+Route::post('/subjects',[SubjectController::class, 'store']);
+Route::put('/subjects/{subjectID}',[SubjectController::class,'update']);
+Route::delete('/subjects/{subjectID}',[SubjectController::class,'destroy']);

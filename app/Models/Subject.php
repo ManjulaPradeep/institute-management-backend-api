@@ -9,7 +9,10 @@ class Subject extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $primaryKey = 'subject_id';
+    protected $guarded = [];
+
+    protected $fillable = ['name,subject_id'];
 
     public function course(){
         return $this->belongsTo(Course::class);

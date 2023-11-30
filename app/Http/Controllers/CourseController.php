@@ -94,7 +94,7 @@ class CourseController extends Controller
 
                 return response()->json(['message' => 'Course updated successfully'], 200);
             } catch (\Throwable $th) {
-                return response()->json(['message' => 'Course to update the lecturer: ' . $th->getMessage()], 500);
+                return response()->json(['message' => 'Failed to update the lecturer: ' . $th->getMessage()], 500);
             }
         } else {
             return response()->json(['message' => 'Course not found'], 404);
