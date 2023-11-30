@@ -88,9 +88,7 @@ public function update(UpdateSubjectRequest $request, $subjectID)
 
     if ($subject) {
         try {
-            // $subject->update($request->validated());
-            DB::update('UPDATE subjects SET name = ? WHERE subject_id = ?', [$request->input('name'), $subjectID]);
-
+            $subject->update($request->validated());
 
             return response()->json(['message' => 'Subject updated successfully'], 200);
         } catch (\Throwable $th) {

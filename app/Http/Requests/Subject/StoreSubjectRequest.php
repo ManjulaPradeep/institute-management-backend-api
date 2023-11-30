@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Subject;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreSubjectRequest extends FormRequest
 {
@@ -34,5 +35,16 @@ class StoreSubjectRequest extends FormRequest
             'name.string' => 'The name field must be a string.',
             'name.max' => 'The name field can not be more than 254 characters.'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        throw new HttpResponseException(response()->json([
+            'message' => 'Validation failed',
+            'errors' => $errors,
+            'data' => null,
+        ], 422));
     }
 }

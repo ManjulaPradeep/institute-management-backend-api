@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id("subject_id");
-            // $table->bigInteger("subject_id")->unique();
             $table->string("name");
-            // $table->foreign("course-id")->references("id")->on("courses");
-            // $table->foreign("lecturer-id")->references("id")->on("lecturers");
             $table->timestamps();
         });
     }

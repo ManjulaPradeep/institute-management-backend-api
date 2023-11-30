@@ -12,7 +12,7 @@ class Subject extends Model
     protected $primaryKey = 'subject_id';
     protected $guarded = [];
 
-    protected $fillable = ['name,subject_id'];
+    protected $fillable = ['subject_id','name'];
 
     public function course(){
         return $this->belongsTo(Course::class);
