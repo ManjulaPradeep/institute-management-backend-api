@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,20 +25,16 @@ Route::get('/students',[StudentController::class,'index']);
 Route::get('/students/{studentID}',[StudentController::class,'show']);
 Route::post('/students', [StudentController::class, 'store']);
 Route::put('/students/{studentID}', [StudentController::class, 'update']);
-// Route::delete('/students/{studentID}', [StudentController::class, 'destroy']);
 Route::delete('/students/{studentID}', [StudentController::class, 'destroy']);
 
-// // Retrieve all students
-// Route::get('/students', [StudentController::class, 'index']);
+Route::get('/lecturers',[LecturerController::class,'index']);
+Route::get('/lecturers/{lecturerID}',[LecturerController::class,'show']);
+Route::post('/lecturers',[LecturerController::class, 'store']);
+Route::put('/lecturers/{lecturerID}',[LecturerController::class, 'update']);
+Route::delete('/lecturers/{lecturerID}',[LecturerController::class, 'destroy']);
 
-// // Retrieve a single student by ID
-// Route::get('/students/{id}', [StudentController::class, 'show']);
-
-// // Create a new student
-// Route::post('/students', [StudentController::class, 'store']);
-
-// // Update a student by ID
-// Route::put('/students/{id}', [StudentController::class, 'update']);
-
-// // Delete a student by ID
-// Route::delete('/students/{id}', [StudentController::class, 'destroy']);
+Route::get('/courses',[CourseController::class,'index']);
+Route::get('/courses/{courseID}',[CourseController::class,'show']);
+Route::post('/courses',[CourseController::class, 'store']);
+Route::put('/courses/{courseID}',[CourseController::class,'update']);
+Route::delete('/courses/{courseID}',[CourseController::class,'destroy']);

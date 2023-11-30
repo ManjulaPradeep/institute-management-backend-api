@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Result;
-use App\Http\Requests\StoreResultRequest;
-use App\Http\Requests\UpdateResultRequest;
+use App\Http\Requests\Result\StoreResultRequest;
+use App\Http\Requests\Result\UpdateResultRequest;
 
 class ResultController extends Controller
 {

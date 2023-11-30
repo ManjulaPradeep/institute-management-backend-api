@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\StParent;
-use App\Http\Requests\StoreStParentRequest;
-use App\Http\Requests\UpdateStParentRequest;
+use App\Http\Requests\Parent\StoreStParentRequest;
+use App\Http\Requests\Parent\UpdateStParentRequest;
 
 class StParentController extends Controller
 {

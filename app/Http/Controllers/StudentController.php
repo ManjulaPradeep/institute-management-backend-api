@@ -53,7 +53,8 @@ class StudentController extends Controller
             Log::error('Failed to create a student: ' . $th->getMessage());
 
             return response()->json([
-                'message' => 'Failed to create the student',
+                'message' => 'Failed to create the student.',
+                'error' => $th->getMessage()
             ], 500);
         }
     }
@@ -70,7 +71,6 @@ class StudentController extends Controller
         }
 
         $studentResource = new StudentResource($student);
-
         return response()->json(['data' => $studentResource], 200);
     }
 

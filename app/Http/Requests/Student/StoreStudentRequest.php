@@ -73,8 +73,6 @@ class StoreStudentRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'message' => 'Validation failed',
             'errors' => $errors,
-            'data' => null, // Include this line to provide additional context
         ], 422));
     }
-
 }

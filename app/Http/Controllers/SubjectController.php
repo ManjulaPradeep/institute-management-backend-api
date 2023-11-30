@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
-use App\Http\Requests\StoreSubjectRequest;
-use App\Http\Requests\UpdateSubjectRequest;
+use App\Http\Requests\Subject\StoreSubjectRequest;
+use App\Http\Requests\Subject\UpdateSubjectRequest;
 
 class SubjectController extends Controller
 {
