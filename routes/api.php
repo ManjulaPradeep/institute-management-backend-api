@@ -3,10 +3,12 @@
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\StParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use PhpParser\NodeVisitor\ParentConnectingVisitor;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +55,8 @@ Route::post('/results',[ResultController::class,'store']);
 Route::put('/results/{resultID}',[ResultController::class,'update']);
 Route::delete('/results/{resultID}',[ResultController::class,'destroy']);
 
-
+Route::get('/parents',[StParentController::class,'index']);
+Route::get('/parents/{parentID}',[StParentController::class,'show']);
+Route::post('/parents',[StParentController::class,'store']);
+Route::put('/parents/{parentID}',[StParentController::class,'update']);
+Route::delete('/parents/{parentID}',[StParentController::class,'destroy']);

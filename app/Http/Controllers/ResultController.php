@@ -22,7 +22,6 @@ class ResultController extends Controller
                 'results' => ResultResource::collection($results)
             ]
         ]);
-
     }
 
     /**
@@ -50,12 +49,13 @@ class ResultController extends Controller
                 'message' => 'Failed to create the Result',
                 'error' => $th->getMessage()
             ], 500);
-        }    }
+        }
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(ResultRequest $result,$resultID)
+    public function show(ResultRequest $result, $resultID)
     {
         $Result = Result::find($resultID);
 
@@ -68,7 +68,8 @@ class ResultController extends Controller
             'data' => [
                 'result' =>  $resultResouce
             ]
-        ], 200);    }
+        ], 200);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -88,14 +89,15 @@ class ResultController extends Controller
         if ($result) {
             try {
                 $result->update($request->validated());
-    
+
                 return response()->json(['message' => 'Result updated successfully'], 200);
             } catch (\Throwable $th) {
                 return response()->json(['message' => 'Failed to update the Result: ' . $th->getMessage()], 500);
             }
         } else {
             return response()->json(['message' => 'Result not found'], 404);
-        }    }
+        }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -109,5 +111,6 @@ class ResultController extends Controller
         }
 
         $result->delete();
-        return response()->json(['message' => 'Result deleted'], 204);    }
+        return response()->json(['message' => 'Result deleted'], 204);
+    }
 }
