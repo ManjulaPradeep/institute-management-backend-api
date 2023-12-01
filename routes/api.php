@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
@@ -45,3 +46,11 @@ Route::get('/subjects/{subjectID}',[SubjectController::class,'show']);
 Route::post('/subjects',[SubjectController::class, 'store']);
 Route::put('/subjects/{subjectID}',[SubjectController::class,'update']);
 Route::delete('/subjects/{subjectID}',[SubjectController::class,'destroy']);
+
+Route::get('/results',[ResultController::class,'index']);
+Route::get('/results/{resultID}',[ResultController::class,'show']);
+Route::post('/results',[ResultController::class,'store']);
+Route::put('/results/{resultID}',[ResultController::class,'update']);
+Route::delete('/results/{resultID}',[ResultController::class,'destroy']);
+
+

@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Result;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
 
 class UpdateResultRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class UpdateResultRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,29 @@ class UpdateResultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'marks' => 'sometimes|int|max:100',
+            'grade' => 'sometimes|string|max:100'        
         ];
+    }
+
+    public function messages():array
+    {
+        return [
+            'marks.int' => 'The marks field must be a integer.',
+            'marks.max' => 'The marks field must be less than 100.',
+
+            'grade.int' => 'The grade field must be a string.',
+            'grade.max' => 'The grade field must be less than 100 characters.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+    
+        throw new HttpResponseException(response()->json([
+            'message' => 'Validation failed',
+            'errors' => $errors,
+        ], 422));
     }
 }

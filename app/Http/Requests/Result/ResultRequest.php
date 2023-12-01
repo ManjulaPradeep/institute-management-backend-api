@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Result;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ResultRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class ResultRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,26 @@ class ResultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'resultID' => 'sometimes|int|max:100|exists:results,id'
         ];
+    }
+
+    public function messages():array
+    {
+        return [
+            'resultID.int' => 'The resultID field must be a integer.',
+            'resultID.max' => 'The resultID field must be less than 100.',
+            'resultID.exists' => 'The resultID does not exists.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+    
+        throw new HttpResponseException(response()->json([
+            'message' => 'Validation failed',
+            'errors' => $errors,
+        ], 422));
     }
 }
